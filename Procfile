@@ -1,1 +1,1 @@
-web: python3.6 app.py
+web: gunicorn app:app
