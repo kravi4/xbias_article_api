@@ -55,7 +55,7 @@ def create_entry():
 		return("ENTRY_CREATED")
 
 
-app.run(port=5000, use_reloader=True)
+app.run()
 
 
 
