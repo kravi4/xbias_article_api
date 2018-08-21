@@ -54,8 +54,8 @@ def create_entry():
 		cur.close()
 		return("ENTRY_CREATED")
 
-
-app.run()
+if __name__=='__main__':
+	app.run(port=5000, debug=True)
 
 
 
