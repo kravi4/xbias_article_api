@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import pymysql
+import datetime
 import sys
 
 REGION = 'us-east-2'
@@ -11,13 +12,16 @@ db_name = 'xbias_backend'
 
 app=Flask(__name__)
 
+
 # GET request to pull all the information from the database
 @app.route('/xbias_backend/get_articles')
 def get_entries_from_loggers():
 	ret_json={}
+	yesterday = (datetime.date.today()-datetime.timedelta(1)).strftime('%Y-%m-%d')
+	yesterday="'%"+yesterday+"%'"
 	conn = pymysql.connect(rds_host, user = username, passwd = password, db= db_name, connect_timeout = 5)
 	with conn.cursor() as cur:
-		cur.execute("""SELECT * FROM article_table""")
+		cur.execute("""SELECT * FROM article_table WHERE publish_timestamp like {0}""".format(yesterday))
 		result = cur.fetchall()
 		cur.close()
 		i=1
